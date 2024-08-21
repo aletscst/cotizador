@@ -1,0 +1,36 @@
+<form [formGroup]="optionForm">
+    <div class="mb-3">
+        <label for="name" class="form-label">Nombre de la opción</label>
+        <input type="text" class="form-control" id="name" formControlName="name">
+        <button class="btn btn-primary" (click)="save()">Guardar</button>
+    </div>
+</form>
+
+<div cdkDropListGroup>
+    <div class="example-container">
+        <h2>Lista de Servicios</h2>
+        <button class="btn btn-primary" (click)="addService()">Agregar servicio</button>
+        <div cdkDropList [cdkDropListData]="services" class="example-list" (cdkDropListDropped)="dropService($event)">
+            @for (item of services; track item) {
+            <div class="example-box" cdkDrag>
+                {{ item.type }} - {{item.name}}
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-success btn-sm" (click)="editService(item)">editar</button>
+                    <button type="button" class="btn btn-danger btn-sm">eliminar</button>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+
+    <div class="example-container">
+        <h2>Servicios Agregados</h2>
+
+        <div cdkDropList [cdkDropListData]="selectedServices" class="example-list"
+            (cdkDropListDropped)="dropService($event)">
+            @for (item of selectedServices; track item) {
+            <div class="example-box" cdkDrag>{{item.name}}</div>
+            }
+        </div>
+    </div>
+</div>

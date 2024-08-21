@@ -1,0 +1,33 @@
+<div class="container">
+    <form [formGroup]="quoteForm">
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" formControlName="name">
+            <button class="btn btn-primary" (click)="createQuote()">Aceptar</button>
+            <button class="btn btn-success" (click)="save()">Guardar todo</button>
+        </div>
+
+        @if (quoteForm.get('idQuote')?.value != 0) {
+        <div style="text-align: center;">
+            @for (option of options.controls; track $index) {
+            <button class="btn " [ngClass]="{'btn-warning': selectedOption == $index, 'btn-outline-warning': selectedOption != $index}" (click)="selectOption($index)">
+                {{ option.get('name')?.value}}
+            </button>
+            }
+            <button class="btn btn-primary" (click)="addOption()">Agregar opción</button>
+        </div>
+        }
+
+        <div formArrayName="options">
+            @for (option of options.controls; track $index) {
+            @if(selectedOption == $index) {
+            <div class="card">
+                <div class="card-body">
+                    <app-option-form [form]="option"></app-option-form>
+                </div>
+            </div>
+            }
+            }
+        </div>
+    </form>
+</div>

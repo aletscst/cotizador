@@ -1,0 +1,33 @@
+<div class="container">
+    <h2>Servicio</h2>
+    <div>
+        <label for="service-type">Seleccione un tipo de servicio</label>
+        <select class="form-select" id="service-type" [(ngModel)]="selectedService">
+            @for (opc of servicesList; track $index) {
+            <option [value]="opc">{{opc}}</option>
+            }
+        </select>
+        <button class="btn btn-primary" (click)="selectServiceType()">Aceptar</button>
+    </div>
+
+    @if(serviceForm) {
+    <h3>Información General</h3>
+    <form [formGroup]="serviceForm">
+        <label for="name" class="form-label">Nombre</label>
+        <input type="text" class="form-control" id="name" formControlName="name">
+    </form>
+    <app-general-form [form]="serviceForm.get('general')"></app-general-form>
+    @switch (serviceForm.get('type')?.value) {
+    @case ('SIM') {
+    <h3>SIM</h3>
+    <app-sim-form [form]="serviceForm.get('sim')"></app-sim-form>
+    }
+    @case ('HOTEL') {
+    <h3>HOTEL</h3>
+    <app-hotel-form [form]="serviceForm.get('hotel')"></app-hotel-form>
+    }
+    }
+    <button class="btn btn-primary" (click)="save()">Guardar</button>
+    <button class="btn btn-danger" (click)="close()">Cerrar</button>
+    }
+</div>
