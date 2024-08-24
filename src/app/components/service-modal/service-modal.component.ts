@@ -7,8 +7,9 @@ import { GeneralFormComponent } from '../forms/general-form/general-form.compone
 import { SimFormComponent } from '../forms/sim-form/sim-form.component';
 import { HotelFormComponent } from '../forms/hotel-form/hotel-form.component';
 import { QuoteService } from '../../services/quote.service';
+import { DropzoneImageComponent } from '../dropzone-image/dropzone-image.component';
 
-export interface FormData {
+export interface ModalServiceData {
   idQuote: number;
   service?: Service;
 }
@@ -21,16 +22,18 @@ export interface FormData {
     ReactiveFormsModule,
     GeneralFormComponent,
     SimFormComponent,
-    HotelFormComponent
+    HotelFormComponent,
+    DropzoneImageComponent
   ],
   templateUrl: './service-modal.component.html',
   styleUrl: './service-modal.component.scss'
 })
 export class ServiceModalComponent {
   readonly dialogRef = inject(MatDialogRef<ServiceModalComponent>);
-  readonly data = inject<FormData>(MAT_DIALOG_DATA);
+  readonly data = inject<ModalServiceData>(MAT_DIALOG_DATA);
   public selectedService: string = '';
   public servicesList: string[] = ['SIM', 'HOTEL'];
+  private imageAdded!: File;
 
   public serviceForm!: FormGroup;
   constructor(private fb: FormBuilder, private formService: FormService, private quoteService: QuoteService) {
@@ -51,12 +54,30 @@ export class ServiceModalComponent {
       next: (service) => {
         this.serviceForm.patchValue(service);
         console.log(this.serviceForm.value);
-        this.dialogRef.close(this.serviceForm.value);
+        if(this.imageAdded) {
+          this.sendImage(service.idService);
+        } else {
+          this.dialogRef.close(this.serviceForm.value);
+        }
       }
     });
   }
 
   close() {
     this.dialogRef.close();
+  }
+
+  onFileSelected(file: File) {
+    this.imageAdded = file;
+  }
+
+  sendImage(idService: number) {
+    console.log(this.imageAdded);
+    let formData: FormData = new FormData();
+    formData.append('file', this.imageAdded);
+    formData.append('idService', idService.toString());
+
+    //aqui va el servicio para subir la imagen. Cuando el servicio de guardar se haga, cerrar el modal
+    this.dialogRef.close(this.serviceForm.value);
   }
 }

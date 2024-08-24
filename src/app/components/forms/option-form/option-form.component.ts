@@ -52,8 +52,6 @@ export class OptionFormComponent implements OnInit {
       next: (services) => {
         console.log(services);
         this.services = services.slice();
-        console.log(this.optionForm.value);
-        
         this.relatedServices.controls.forEach((control) => {
           const service = this.services.find((s) => s.idService === control.value);
           if (service) {
@@ -85,7 +83,8 @@ export class OptionFormComponent implements OnInit {
 
   addService() {
     const dialogRef = this.matDialog.open(ServiceModalComponent, {
-      height: '800px',
+      height: '80%',
+      width: '90%',
       disableClose: true,
       data: { idQuote: 1 },
     });
@@ -100,7 +99,7 @@ export class OptionFormComponent implements OnInit {
 
   editService(service: Service) {
     const dialogRef = this.matDialog.open(ServiceModalComponent, {
-      height: '800px',
+      height: '80%',
       disableClose: true,
       data: { idQuote: 1, service },
     });

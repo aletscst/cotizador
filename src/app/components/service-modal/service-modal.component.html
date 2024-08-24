@@ -13,8 +13,15 @@
     @if(serviceForm) {
     <h3>Información General</h3>
     <form [formGroup]="serviceForm">
-        <label for="name" class="form-label">Nombre</label>
-        <input type="text" class="form-control" id="name" formControlName="name">
+        <div class="row">
+            <div class="col-4">
+                <app-dropzone-image (onFileSelected)="onFileSelected($event)"></app-dropzone-image>
+            </div>
+            <div class="col">
+                <label for="type" class="form-label">Tipo</label>
+                <input type="text" class="form-control" id="type" formControlName="type">
+            </div>
+        </div>
     </form>
     <app-general-form [form]="serviceForm.get('general')"></app-general-form>
     @switch (serviceForm.get('type')?.value) {
