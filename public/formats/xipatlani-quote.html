@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            text-align: center;
+            background-color: #f4f4f4;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        /* Espacio para que el contenido no esté debajo del header */
+        .content {
+            margin-top: 120px;
+        }
+
+        /* Estilos para impresión */
+        @media print {
+
+            header {
+                position: fixed;
+                top: 0;
+                width: 100%;
+                background-color: #f4f4f4;
+                border-bottom: 1px solid #ddd;
+                text-align: center;
+            }
+
+            /* Asegurar que el contenido no quede cubierto por el header al imprimir */
+            section {
+                page-break-before: always;
+                margin-top: 120px;
+            }
+        }
+    </style>
+    <script>
+        window.onload = createSection;
+
+        function getData() {
+            localStorage.getItem('quote-data');
+        }
+        function createSection(){
+            var section = document.createElement('section');
+            section.innerHTML = 'Este es el contenido de la página 3.';
+            document.getElementById('content').appendChild(section);
+        }
+    </script>
+</head>
+
+<body>
+    <header>
+        <h1>Mi Encabezado en Cada Página</h1>
+    </header>
+
+    <div id="content" class="content">
+        <section>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam, eveniet. Similique officia obcaecati
+                velit
+                vel! Assumenda vel sed totam cupiditate consequatur similique quasi non inventore.</p>
+        </section>
+        <section>
+            <p>Este es el contenido de la página 2.</p>
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellendus at alias magnam accusamus esse vel
+                quasi laudantium impedit culpa? Nemo similique officia ratione debitis perspiciatis quod quia, quasi
+                sunt
+                praesentium repellendus consequatur id earum vitae, sapiente laboriosam, autem possimus laudantium
+                placeat
+                asperiores fuga est quis. Minus eligendi sequi illum voluptatum.</p>
+        </section>
+        <!-- Más contenido que se repartirá en diferentes páginas -->
+    </div>
+</body>
+
+</html>

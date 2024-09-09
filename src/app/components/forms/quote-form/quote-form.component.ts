@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { OptionFormComponent } from '../option-form/option-form.component';
 import { QuoteService } from '../../../services/quote.service';
 import { FormService } from '../../../services/form.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-quote-form',
@@ -16,7 +17,7 @@ export class QuoteFormComponent {
   public quoteForm: FormGroup;
   public selectedOption: number = 0;
 
-  constructor(private fb: FormBuilder, private quoteService: QuoteService, private formService: FormService) {
+  constructor(private fb: FormBuilder, private quoteService: QuoteService, private formService: FormService, private router: Router) {
     this.quoteForm = this.fb.group({
       idQuote: [0, [Validators.required]],
       name: ['', [Validators.required]],
@@ -50,5 +51,7 @@ export class QuoteFormComponent {
 
   save() {
     console.log(this.quoteForm.value);
+    const newUrl = this.router.serializeUrl(this.router.createUrlTree(['formats/xipatlani-quote.html']));
+    window.open(newUrl, '_blank');
   }
 }
