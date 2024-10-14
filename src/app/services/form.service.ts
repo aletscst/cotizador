@@ -43,6 +43,7 @@ export class FormService {
       simName: ['Sim 1', [Validators.required]],
       description: ['Sim 1 description', [Validators.required]],
       countrySim: ['MX', [Validators.required]],
+      price: [0, [Validators.required]],
     });
   }
 
